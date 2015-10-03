@@ -1,5 +1,5 @@
 multiRunFAHRIG=function(PATH,nrep=20,growth,offs.size=1,Mort=0.05,movehab,matsurv,N0=500,dens.lim=10,
-                        BC=1,tm=500, cover, frag, ini.rep=1)
+                        BC=1,tm=500, cover, frag, ini.rep=1,save.land=F,save.codes=NULL,save.path=NULL)
 {
   oldpath <- getwd()
   dir.create(PATH, recursive=TRUE)
@@ -7,6 +7,8 @@ multiRunFAHRIG=function(PATH,nrep=20,growth,offs.size=1,Mort=0.05,movehab,matsur
   for(i in 1:nrep)
   {
     land=Landscape(type="fahrig",cell.size=1,numb.cells=30,bound.condition=BC,FRAG=frag,cover=cover)
+    if(save.land) write(land$scape,paste(save.path,"/Comb-",save.codes,"Rep",ini.rep,sep=""))
+    
     FahrigIBM(GROWTH=growth,
               offspringSize=offs.size,
               Mortality=Mort,
